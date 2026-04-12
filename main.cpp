@@ -25,17 +25,19 @@ concept Numeric = Addable<T> && Multipliable<T> && Divisible<T>;
 
 namespace core_numeric {
 
-    // 1. Mean (Must be defined first)
     template <typename T>
     requires Numeric<T>
-    T mean(const vector<T>& v) {
-        if (v.empty()) return T{};
+    auto mean(const vector<T>& v) {
+        if (v.empty()) return 0.0;
         T s = 0;
         for (const auto& x : v) s += x;
-        return s / v.size();
+        if constexpr (std::is_integral_v<T>) {
+            return static_cast<double>(s) / v.size();
+        } else {
+            return s / v.size();
+        }
     }
 
-    // 2. Variance
     template <typename T>
     requires Numeric<T>
     T variance(const vector<T>& v) {
@@ -49,7 +51,6 @@ namespace core_numeric {
         return mean(desviacion_cuadrado);
     }
 
-    // 3. Max
     template <typename T>
     requires Numeric<T>
     T max(const vector<T>& data) {
@@ -87,7 +88,13 @@ namespace core_numeric {
 
     template <typename... Args>
     auto sum_variadic(Args... args) {
-        return (... + args);
+        if constexpr (sizeof...(args) == 0) {
+            return 0; 
+        } else if constexpr (sizeof...(args) == 1) {
+            return (... + args);
+        } else {
+            return (... + args);
+        }
     }
 }
 
