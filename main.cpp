@@ -14,20 +14,11 @@ concept Addable = requires(T a, T b) {
     { a + b } -> same_as<T>;
 };
 
-template <typename T>
-concept Subtractable = requires(T a, T b) {
-    { a - b } -> same_as<T>;
-};
 
 template <typename T>
 concept Divisible = requires(T a, size_t n) {
     { a / n } -> same_as<T>;
 };
-template <typename T>
-concept Comparable = requires(T a, T b) {
-    { a > b } -> same_as<bool>;
-};
-
 
 namespace core_numeric {
     template <Iterable C>
@@ -48,9 +39,9 @@ namespace core_numeric {
         int n = v.size();
         return (double)s / n;
     }
-
+//
     template <Iterable C>
-    requires Subtractable<double>
+    requires Addable<double>
     double variance(const C& v) {
         if (v.empty()) return 0.0;
         double m = mean(v);
@@ -62,9 +53,9 @@ namespace core_numeric {
         }
         return mean(temp);
     }
-
+    //Algoritmo lineal de ordenamiento
     template <typename T>
-    requires Comparable<T>
+    requires is_arithmetic_v<T>
     T max(const vector<T>& data) {
         if (data.empty()) {
             throw runtime_error("Empty container");
@@ -72,8 +63,8 @@ namespace core_numeric {
         T current_max = data[0];
         for (const auto& x : data) {
             if (x > current_max) current_max = x;
+            return current_max;
         }
-        return current_max;
     }
 
     template <Iterable C, typename f>

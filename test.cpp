@@ -118,42 +118,53 @@ int main() {
     vector<Coordenada2D> c2d{
         {1,2}, {3,4}, {0,1}
     };
-    auto mc2d = core_numeric::max(c2d);
-    mc2d.print(); cout << endl;
 
-    vector<Vector3D> v3d{
-        {1,2,3}, {4,5,6}, {0,1,1}
-    };
-    auto mv3d = core_numeric::max(v3d);
-    mv3d.print(); cout << endl;
+    //ERROR AL COMPILAR, NO SE PUEDEN COMPARAR PARES ORDENADOS, YA QUE NO SON VALORES ARITMETICOS
+    //auto mc2d = core_numeric::max(c2d);
+    //cout << "maximo1 : ";mc2d.print(); cout << endl;
+
 
     vector<Esfera> es{
         {2.0}, {5.0}, {3.0}
     };
-    auto mes = core_numeric::max(es);
-    cout << mes.getRadio() << endl;
+    //NO COMPILA, YA QUE ES NO TIENE VALORES ARITMETICOS COMPARABLES
+    ///auto mes = core_numeric::max(es);
+    //cout << mes.getRadio() << endl;
 
+    //PRUEBA EXITOSA DE VECTORES
     vector<int> v1{1,2,3};
     cout << core_numeric::sum(v1) << endl;
     cout << core_numeric::mean(v1) << endl;
+    cout << core_numeric::max(v1) << endl;
 
+    //PRUEBA EXITOSA DE VECTORES
     vector<double> v2{1.0,2.0,3.0};
     cout << core_numeric::variance(v2) << endl;
 
     vector<double> v3{1,2.7,0.3};
     cout << core_numeric::max(v3) << endl;
 
+    //PRUEBA DE TRANSFORMACION DE REDUCCION
     auto r = core_numeric::transform_reduce(v2, [](double x){
         return x * x;
     });
     cout << r << endl;
 
-    cout << core_numeric::sum_variadic(1,2,3,4) << endl;
+    //PRUEBAS DE VARIADIC: 
+    cout <<"Sum variadic: " << core_numeric::sum_variadic(1,2,3,4) << endl;
+    cout << "Max Variadic: " <<core_numeric::max_variadic(1,2.7,3.8) << endl;
+    cout << "Mean variadic: " << core_numeric::mean_variadic(2, 3, 4, 5, 2) << endl;
+    cout << "Variance variadic: " << core_numeric::variance_variadic(1, 2, 32, 4, 2, 1 , 6) << endl;
+
+
+
 
     // Clase propia
     vector<Punto> vp{Punto(1), Punto(5), Punto(3)};
-    auto m = core_numeric::max(vp);
-    cout << m.getX()<< endl;
+
+    // NO COMPILA YA QUE NO SON VALORES NUMERICOS
+    //auto m = core_numeric::max(vp);
+
 
 
     // =======================
